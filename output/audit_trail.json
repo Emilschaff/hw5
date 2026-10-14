@@ -202,4 +202,12 @@
     "target": "102",
     "result": "Completed ticket 102: {\"answer\": \"## Ticket 102 \\u2014 Rent notice\\n\\n**Database facts:** The ticket concerns the Chapel Street shop lease with Elm City Properties. The lease records monthly rent of **$2,400**, due **2026-09-02**. Ticket notes say the rent was due in two days, consistent with the recorded desk date of **2026-08-31**. However, the ticket is marked **resolved**, and the payment record lists a **$2,400** "
   }
+  ,
+  {
+    "timestamp": "2026-10-14T02:30:00-04:00",
+    "agent": "Boss",
+    "action": "audit_correction",
+    "target": "101,102,103",
+    "result": "Reviewed backend/team.py, all five agent entry files, and the historical entries. No delegation calls or specialist-agent audit entries were recorded in the ticket runs; prior specialist contribution claims are corrected in resolved_tickets.json and harness.md."
+  }
 ]

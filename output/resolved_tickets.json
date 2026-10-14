@@ -4,21 +4,21 @@
       "id": 101,
       "final_status": "resolved",
       "short_outcome": "Size-S tee unavailable; linked $840 reprint invoice was paid with human approval.",
-      "agent_contributions": {"Boss": "Reviewed MCP evidence and required human approval.", "Inventory": "Confirmed zero size-S stock and five-day vendor lead time.", "Accounting": "Reviewed the open invoice and payment requirement.", "Customer Service": "Prepared an honest delay/no-ship-date customer response.", "Facilities": "Not involved."},
+      "agent_contributions": {"Boss": "Called the MCP customer-order context tool, reviewed the returned stock/invoice/vendor evidence, and required human approval. No separate Inventory, Accounting, Customer Service, or Facilities agent call was recorded."},
       "human_approvals": [{"amount": 840.0, "account": "checking", "approved_by": "Human operator"}]
     },
     {
       "id": 102,
       "final_status": "resolved",
       "short_outcome": "Rent obligation reviewed and paid with human approval.",
-      "agent_contributions": {"Boss": "Coordinated the approval gate.", "Facilities": "Confirmed the Chapel Street lease and September 2 due date.", "Accounting": "Confirmed the $2,400 rent and available checking funds before payment.", "Inventory": "Not involved.", "Customer Service": "Not involved."},
+      "agent_contributions": {"Boss": "Called the MCP facilities, financial-obligations, and rent-payment context tools, reviewed the returned lease/cash/payment evidence, and required human approval. No separate Facilities or Accounting agent call was recorded; Inventory and Customer Service were not involved."},
       "human_approvals": [{"amount": 2400.0, "account": "checking", "approved_by": "Human operator"}]
     },
     {
       "id": 103,
       "final_status": "resolved",
       "short_outcome": "0% discount approved; $58 list price stands. Customer Service communicates the 8-in-stock shortage without promising 20 units or a discount. No cash moved.",
-      "agent_contributions": {"Boss": "Reviewed the price-override request and approved the no-discount resolution.", "Inventory": "Confirmed 8 medium hoodies against 20 requested, a shortfall of 12.", "Accounting": "Confirmed $22 unit cost and $58 list price; no payment was warranted.", "Customer Service": "Will communicate the shortage honestly without promising full quantity or a discount.", "Facilities": "Not involved."},
+      "agent_contributions": {"Boss": "Called MCP tools for hoodie context and financial obligations, reviewed the 8-versus-20 stock shortfall and $22/$58 pricing, and approved the no-cash resolution. No separate Inventory, Accounting, or Customer Service agent call was recorded; Facilities was not involved."},
       "human_approvals": [{"decision": "0% discount; list price stands", "cash_impact": 0.0}],
       "reversed_actions": [{"amount": 50.0, "cash_impact": 0.0, "note": "Earlier non-traceable payment was reversed before this resolution."}]
     }
