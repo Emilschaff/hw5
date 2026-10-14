@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Customs Desk Tickets</title>
+  <style>
+    body { font-family: system-ui, sans-serif; line-height: 1.5; max-width: 960px; margin: 2rem auto; padding: 0 1rem; color: #172b4d; }
+    nav { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    button { border: 1px solid #9aa9bd; border-radius: .4rem; background: #f4f6f8; padding: .6rem 1rem; cursor: pointer; }
+    button[aria-selected="true"] { background: #00356b; color: white; }
+    section { border: 1px solid #d4dbe4; border-radius: .6rem; padding: 1.25rem; }
+    .actual { min-height: 2rem; border: 1px dashed #b9c2ce; padding: .75rem; }
+    .placeholder { color: #5b6b7f; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>Campus Customs Desk Tickets</h1>
+  <nav role="tablist" aria-label="Campus Customs desk tabs">
+    <button role="tab" aria-selected="true" aria-controls="ticket-101" id="tab-101" onclick="showTab('ticket-101', this)">Ticket 101</button>
+    <button role="tab" aria-selected="false" aria-controls="ticket-102" id="tab-102" onclick="showTab('ticket-102', this)">Ticket 102</button>
+    <button role="tab" aria-selected="false" aria-controls="ticket-103" id="tab-103" onclick="showTab('ticket-103', this)">Ticket 103</button>
+    <button role="tab" aria-selected="false" aria-controls="cash" id="tab-cash" onclick="showTab('cash', this)">Cash</button>
+    <button role="tab" aria-selected="false" aria-controls="reflection" id="tab-reflection" onclick="showTab('reflection', this)">Reflection</button>
+  </nav>
+  <main>
+    <section role="tabpanel" id="ticket-101" aria-labelledby="tab-101">
+      <h2>Ticket 101</h2>
+      <h3>Expected</h3>
+      <p>Boss calls Inventory first, to confirm the size-S stock is at 0 and check Bulldog Print Co.'s 5-day lead time. Then Accounting, because the shop rule against shipping while an unpaid invoice is open means invoice 501 has to be resolved before any reprint can proceed. Then Customer Service, to tell the customer there's a delay without promising a ship date yet. Facilities is not involved. Expected MCP tools: inventory lookup, vendor lookup, invoice/payment check.</p>
+      <h3>Actual</h3><div class="actual"><p><strong>Original resolution run:</strong> Boss ran ticket 101 through the agent route and used the MCP <code>get_customer_order_context</code> tool. It confirmed zero size-S stock, the $28 list price, invoice 501, and Bulldog Print Co.'s five-day lead time. The agent recommended resolving the open invoice before any reprint commitment. No delegation was recorded in the authoritative audit trail. The approval route then executed the actual $840.00 payment for invoice 501 from checking, and ticket 101 was marked resolved.</p><p><strong>Post-resolution rerun observation:</strong> A later read-only rerun found that the ticket was resolved while size-S inventory remained at 0 and invoice 501 still appeared open. It made no payment or status change.</p></div>
+    </section>
+    <section role="tabpanel" id="ticket-102" aria-labelledby="tab-102" hidden>
+      <h2>Ticket 102</h2>
+      <h3>Expected</h3>
+      <p>Boss calls Facilities first, to confirm the lease terms and the rent due date are accurate. Then Accounting, to confirm the $3,400 checking balance covers the $2,400 rent without going negative. Then Boss escalates to a human for payment approval, since human approval is required for any payment. Inventory and Customer Service are not involved, this is purely internal. Expected MCP tools: lease lookup, cash balance check, payment tool (held for approval).</p>
+      <h3>Actual</h3><div class="actual"><p><strong>Original resolution run:</strong> Boss ran ticket 102 through the agent route and used the MCP <code>get_facilities_context</code>, <code>get_financial_obligations</code>, and <code>get_rent_payment_context</code> tools. It confirmed lease 1, the $2,400 rent, the due date, checking funds, and the absence of a prior rent payment. No delegation was recorded in the authoritative audit trail. The approval route then executed the actual $2,400.00 rent payment for lease 1 from checking, and ticket 102 was marked resolved.</p><p><strong>Post-resolution rerun observation:</strong> A later read-only rerun found a timing discrepancy between the ticket/desk date and the recorded payment date, and noted the resolved status. It made no second payment or status change.</p></div>
+    </section>
+    <section role="tabpanel" id="ticket-103" aria-labelledby="tab-103" hidden>
+      <h2>Ticket 103</h2>
+      <h3>Expected</h3>
+      <p>Boss calls Inventory first, to confirm the shortfall, 8 medium hoodies in stock against 20 requested, and whether restock is possible in time. Then Accounting, to evaluate whether a bulk discount off the $58 list price is viable given the $22 unit cost. Then Boss, since this is a price_override ticket and no discount can go out without approval. Finally Customer Service drafts a response communicating the shortage without promising a discount or delivery date. Facilities is not involved. Expected MCP tools: inventory lookup, pricing lookup.</p>
+      <h3>Actual</h3><div class="actual"><p>Boss ran the ticket through the agent route. MCP evidence confirmed 8 medium hoodies in stock against 20 requested, with a $22 unit cost and $58 list price. Boss approved a 0% discount, so the list price stands. Customer Service is to communicate the 8-in-stock shortage honestly to Yale AI Club without promising the full 20 or a discount. No purchase order or payment was made, and no cash moved.</p></div>
+    </section>
+    <section role="tabpanel" id="cash" aria-labelledby="tab-cash" hidden>
+      <h2>Cash</h2>
+      <div class="cash-ledger">
+        <p><strong>Starting checking balance after the Problem 9 reset:</strong> $3,400.00</p>
+        <p><strong>Ticket 101:</strong> paid $840.00 to settle invoice 501, clearing the block on the Bulldog Print Co. reprint.</p>
+        <p><strong>Ticket 102:</strong> paid $2,400.00 for rent per lease 1.</p>
+        <p><strong>Ticket 103:</strong> $0, resolved as a declined discount, no cash impact.</p>
+        <p><strong>Ending checking balance:</strong> $160.00, matching <code>cash_accounts</code> in the working database.</p>
+        <p class="math"><strong>Math:</strong> $3,400.00 − $840.00 − $2,400.00 − $0.00 = $160.00</p>
+      </div>
+    </section>
+    <section role="tabpanel" id="reflection" aria-labelledby="tab-reflection" hidden>
+      <h2>Reflection</h2>
+      <div class="reflection-content">
+        <h3>1. Agent performance per ticket, and why</h3>
+        <p>Ticket 101 was technically correct, so the right data was gathered and the payment executed properly once approved. But it was done by Boss alone calling one MCP tool, not through delegation to the other specialist agents.</p>
+        <p>Ticket 102 had the same issue: correct outcome and payment, but again no delegation, Boss called three MCP tools directly itself.</p>
+        <p>Ticket 103 worked! This one actually matches the prediction, where it called multiple agents and used them successfully.</p>
+
+        <h3>2. Expected vs Actual, per ticket</h3>
+        <p>For tickets 101 and 102, the Boss was expected to call the next agent for accounting, and then customer service if needed. Instead, the Boss called every tool itself, used input from me, and executed everything without using the other agents. This was materially different from the expectation, and usually resulted in incorrect outcomes.</p>
+        <p>For the third ticket, the Boss did run things through the agents, asking them to check inventory, then relay the non-discount to the customer. This was successful I think.</p>
+
+        <h3>3. One agent instead of five, and why</h3>
+        <p>Though the five agents working together was more successful, it seemed hard to coordinate and the Boss seemed like it could execute with tools on its own in not much extra time. I'm not really sure though because the Boss did get a lot wrong, so maybe it would have been better with the 5 agents.</p>
+
+        <h3>4. Three new solvable problems</h3>
+        <p>The three new problems I think are obvious. I think the agents should be called, they should run on their own and ask the human less (because I think I confused them a little) and they should each be able to be much faster working in tandem than just the Boss working by itself.</p>
+
+        <h3>5. Three new unsolvable problems</h3>
+        <p>I think that not having all of the information available was difficult for the agents. They needed to know things that weren't given to them, like what normal protocol for discounts is, what to do about customers who continue to go back and forth without coming to an answer, or how to handle things like the customer saying they want an irregular return policy, like making things right by a personal apology or a card or something crazy.</p>
+      </div>
+    </section>
+  </main>
+  <script>
+    function showTab(id, selectedTab) {
+      document.querySelectorAll('[role="tabpanel"]').forEach(panel => { panel.hidden = panel.id !== id; });
+      document.querySelectorAll('[role="tab"]').forEach(tab => { tab.setAttribute('aria-selected', tab === selectedTab ? 'true' : 'false'); });
+    }
+  </script>
+</body>
+</html>
